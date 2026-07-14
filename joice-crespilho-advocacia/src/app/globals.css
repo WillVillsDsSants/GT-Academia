@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* compensa o header fixo em âncoras */
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    background-color: #b08a3c;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b08a3c;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Ritmo vertical padrão das seções */
+  .section {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  /* Sobrelinha dourada — marca registrada das seções */
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.28em] text-gold;
+  }
+
+  /* Linha fina dourada (elemento gráfico da identidade) */
+  .hairline {
+    @apply h-px w-16 bg-gold;
+  }
+
+  .hairline-full {
+    @apply h-px w-full bg-ink/10;
+  }
+}
+
+/* Revelação suave ao rolar (ativada via IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Acessibilidade: respeita a preferência por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
